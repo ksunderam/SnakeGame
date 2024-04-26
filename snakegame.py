@@ -13,6 +13,10 @@ import cv2
 import random
 import time
 
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+
 # Library Constants
 BaseOptions = mp.tasks.BaseOptions
 HandLandmarker = mp.tasks.vision.HandLandmarker
@@ -101,16 +105,16 @@ class Game:
 
 
             # Draw score onto screen
-            cv2.putText(image, str(self.score), (50, 50), fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=1, color=GREEN, thickness=2)
+            #cv2.putText(image, str(self.score), (50, 50), fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=1, color=GREEN, thickness=2)
 
             # Convert the image to a readable format and find the hands
             to_detect = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
             results = self.detector.detect(to_detect)
 
             #Draw the enemy on the image
-            self.green_enemy.draw(image)
+            #self.green_enemy.draw(image)
 
-            self.red_enemy.draw(image)
+            #self.red_enemy.draw(image)
 
             # if time.time() - self.starttime >= 2:
             #     self.enemies.append(Enemy(GREEN))
@@ -122,8 +126,8 @@ class Game:
             #     enemy.draw(image)
 
             # Draw the hand landmarks
-            #self.draw_landmarks_on_hand(image, results)
-            self.check_enemy_kill(image, results)
+            self.draw_landmarks_on_hand(image, results)
+            #self.check_enemy_kill(image, results)
 
             # Change the color of the frame back
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
