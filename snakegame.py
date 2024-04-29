@@ -10,12 +10,19 @@ import mediapipe as mp
 from mediapipe import solutions
 from mediapipe.framework.formats import landmark_pb2
 import cv2
+import pygame
 import random
 import time
 
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
+
+    # Initialize Pygame
+    pygame.init()
+    self.clock = pygame.time.Clock()
+    self.dt = 0
+    self.ghost_timer = 8000
 
 # Library Constants
 BaseOptions = mp.tasks.BaseOptions
@@ -93,7 +100,8 @@ class Game:
         user presses "q".
         """    
         # TODO: Modify loop condition  
-        while self.video.isOpened():
+        running  = True
+        while self.video.isOpened() and running:
             # Get the current frame
             frame = self.video.read()[1]
 
@@ -131,7 +139,8 @@ class Game:
 
             # Change the color of the frame back
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            cv2.imshow('Hand Tracking', image)
+            # cv2.imshow('Hand Tracking', image)
+
 
             # Break the loop if the user presses 'q'
             if cv2.waitKey(50) & 0xFF == ord('q'):
