@@ -11,6 +11,7 @@ from mediapipe import solutions
 from mediapipe.framework.formats import landmark_pb2
 import cv2
 import pygame
+import sys
 import random
 import time
 
@@ -18,11 +19,8 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
-    # Initialize Pygame
-    pygame.init()
-    self.clock = pygame.time.Clock()
-    self.dt = 0
-    self.ghost_timer = 8000
+# Initialize Pygame
+pygame.init()
 
 # Library Constants
 BaseOptions = mp.tasks.BaseOptions
@@ -50,6 +48,10 @@ class Game:
     Main game loop. Runs until the 
     user presses "q".
     """
+
+    BACKGROUND_COLOR = (0, 0, 0)
+
+
     def __init__(self):
         # Load game elements
         # self.score
@@ -57,6 +59,15 @@ class Game:
         # self.food
 
         # self.snake
+
+
+        self.HEIGHT = 700
+        self.WIDTH = 700
+
+        # Create the game window
+        self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+
+
 
         # Create the hand detector
         base_options = BaseOptions(model_asset_path='data/hand_landmarker.task')
@@ -99,6 +110,12 @@ class Game:
         Main game loop. Runs until the 
         user presses "q".
         """    
+
+        # Draw the initial screen
+        self.screen.fill(self.BACKGROUND_COLOR)
+        #self.screen.draw(self.screen)
+        #self.mango.draw(self.screen)
+
         # TODO: Modify loop condition  
         running  = True
         while self.video.isOpened() and running:
@@ -112,8 +129,9 @@ class Game:
             image = cv2.flip(image, 1)
 
 
+
             # Draw score onto screen
-            #cv2.putText(image, str(self.score), (50, 50), fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=1, color=GREEN, thickness=2)
+            # cv2.putText(image, str(self.score), (50, 50), fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=1, color=GREEN, thickness=2)
 
             # Convert the image to a readable format and find the hands
             to_detect = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
@@ -139,16 +157,22 @@ class Game:
 
             # Change the color of the frame back
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            # cv2.imshow('Hand Tracking', image)
+
+            #FOR VIDEO TO SHOW - AAAAAAAA
+            cv2.imshow('Hand Tracking', image)
 
 
             # Break the loop if the user presses 'q'
             if cv2.waitKey(50) & 0xFF == ord('q'):
-                print(self.score)
+                #print(self.score)
                 break
 
         self.video.release()
         cv2.destroyAllWindows()
+        pygame.quit()
+        sys.exit()
+
+
 
 
 if __name__ == "__main__":        
