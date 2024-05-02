@@ -30,11 +30,19 @@ HandLandmarkerOptions = mp.tasks.vision.HandLandmarkerOptions
 VisionRunningMode = mp.tasks.vision.RunningMode
 DrawingUtil = mp.solutions.drawing_utils
 
-# class Snake:
-#     """
-#     Main character of game
-#     """
-#     def __init__(self):
+class Snake:
+    """
+    Main character of game
+    """
+    def __init__(self):
+
+        #Goes from 0,0 to 14, 14 maps onto x y when mutiplying with the board (by 50 since image is 700x700), is a 2d array
+        self.location
+        #Just int, determines how far back path goes
+        self.length
+        #1d array
+        self.path
+
 
 
 # class Food:
@@ -66,6 +74,11 @@ class Game:
 
         # Create the game window
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+        pygame.display.set_caption("Snake Game")
+
+        self.image = pygame.image.load("data/Snake_Game_Grid.png")
+        self.screen.blit(self.image, (0,0))
+
 
 
 
@@ -112,13 +125,19 @@ class Game:
         """    
 
         # Draw the initial screen
-        self.screen.fill(self.BACKGROUND_COLOR)
+        #self.screen.fill(self.BACKGROUND_COLOR)
         #self.screen.draw(self.screen)
         #self.mango.draw(self.screen)
+        self.screen.blit(self.image, (0,0))
+        pygame.display.flip()
 
         # TODO: Modify loop condition  
         running  = True
         while self.video.isOpened() and running:
+
+            self.screen.blit(self.image, (0,0))
+            pygame.display.flip()
+
             # Get the current frame
             frame = self.video.read()[1]
 
