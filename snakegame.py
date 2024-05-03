@@ -53,6 +53,16 @@ class Food:
         #randon location on borad, but not where 
         self.location
 
+    def respawn():
+        Xlocation = random
+        Ylocation = random
+        location[x][y] = random
+
+
+
+
+
+
 class Game:
     """
     Main game loop. Runs until the 
@@ -80,6 +90,8 @@ class Game:
 
         self.image = pygame.image.load("data/Snake_Game_Grid.png")
         self.screen.blit(self.image, (0,0))
+
+        self.board
 
 
 
@@ -127,15 +139,17 @@ class Game:
                 finger = hand_landmarks[HandLandmarkPoints.INDEX_FINGER_TIP.value]
                 thumb = hand_landmarks[HandLandmarkPoints.THUMB_TIP.value]
 
+                imageHeight, imageWidth = image.shape[:2]
+
                 pixelCoord = DrawingUtil._normalized_to_pixel_coordinates(finger.x, finger.y, imageWidth, imageHeight)
                 pixelCoordThumb = DrawingUtil._normalized_to_pixel_coordinates(thumb.x, thumb.y, imageWidth, imageHeight)
 
                 if pixelCoord:
                     cv2.circle(image, (pixelCoord[0], pixelCoord[1]), 25, GREEN, 5)
                     #self.check_enemy_intercept_hitsametime(pixelCoord[0], pixelCoord[1], self.green_enemy, image, time.time())
-                    # for enemy in self.enemies:
-                    #     self.check_enemy_intercept(pixelCoord[0], pixelCoord[1], enemy, image)
-                    self.check_enemy_intercept(pixelCoord[0], pixelCoord[1], self.green_enemy, image)
+                #     # for enemy in self.enemies:
+                #     #     self.check_enemy_intercept(pixelCoord[0], pixelCoord[1], enemy, image)
+                #     self.check_enemy_intercept(pixelCoord[0], pixelCoord[1], self.green_enemy, image)
             #####DRAW FINGER
             
     def run(self):
