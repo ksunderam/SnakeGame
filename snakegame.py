@@ -1,9 +1,9 @@
-
 """
 Snake Game!
 
 @author: Kayan Sunderam
 @version: April 2024
+Note: The base of the Snake Game logic was done by chat GPT but I made a couple of edits for it to fit my game
 
 """
 
@@ -13,15 +13,13 @@ from mediapipe.framework.formats import landmark_pb2
 import cv2
 import pygame
 import random
+
 # Set up the screen
 GRID_SIZE = 50
 GRID_WIDTH = 14
 GRID_HEIGHT = 14
 SCREEN_WIDTH = GRID_WIDTH * GRID_SIZE
 SCREEN_HEIGHT = GRID_HEIGHT * GRID_SIZE
-# SCREEN_WIDTH = 700
-# SCREEN_HEIGHT = 700
-# screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Snake Game")
 image = pygame.image.load("data/Snake_Game_Grid.png")
@@ -29,7 +27,7 @@ screen.blit(image, (0,0))
 
 # Colors
 WHITE = (255, 255, 255)
-BLUE = (2, 51, 166) #BLUEEEEEE
+BLUE = (2, 51, 166) 
 RED = (255, 0, 0)
 
 # Initialize Pygame
@@ -103,26 +101,28 @@ class Snake:
 
         if xPos > 500 and xPos < 2000 and yPos < 400:
             self.turn(UP)
-            print("UP")
-            print(xPos)
-            print(yPos)
+            # print("UP")
+            # print(xPos)
+            # print(yPos)
         elif xPos > 500 and xPos < 2000 and yPos > 1200:
             self.turn(DOWN)
-            print("DOWN")
-            print(xPos)
-            print(yPos)
+            # print("DOWN")
+            # print(xPos)
+            # print(yPos)
         elif yPos > 400 and yPos < 1200 and xPos < 500:
             self.turn(LEFT)
-            print("LEFT")
-            print(xPos)
-            print(yPos)
+            # print("LEFT")
+            # print(xPos)
+            # print(yPos)
         elif yPos > 400 and yPos < 1200 and xPos > 2000:
             self.turn(RIGHT)
-            print("RIGHT")
-            print(xPos)
-            print(yPos)
+            # print("RIGHT")
+            # print(xPos)
+            # print(yPos)
 
-
+        print("X: " + str(xPos))
+        print("Y: " + str(yPos))
+        
 
 class Food:
     """
@@ -154,19 +154,10 @@ class Game:
     user presses "q".
     """
 
-
     def __init__(self):
         # Load game elements
-        # self.score
-
-        # self.food
-
-        # self.snake
-
 
         self.clock = pygame.time.Clock()
-        # screen.blit(self.image, (0,0))
-
 
         self.HEIGHT = 700
         self.WIDTH = 700
@@ -177,14 +168,6 @@ class Game:
         # Create the game window
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         pygame.display.set_caption("Snake Game")
-
-        # self.image = pygame.image.load("data/Snake_Game_Grid.png")
-        # self.screen.blit(self.image, (0,0))
-
-        #self.board
-
-
-
 
         # Create the hand detector
         base_options = BaseOptions(model_asset_path='data/hand_landmarker.task')
@@ -240,13 +223,6 @@ class Game:
                     cv2.circle(image, (pixelCoord[0], pixelCoord[1]), 25, BLUE, 5)
                     self.xPos = pixelCoord[0]
                     self.yPos = pixelCoord[1]
-                    # print(self.xPos)
-                    # print(self.yPos)
-                    #self.check_enemy_intercept_hitsametime(pixelCoord[0], pixelCoord[1], self.green_enemy, image, time.time())
-                #     # for enemy in self.enemies:
-                #     #     self.check_enemy_intercept(pixelCoord[0], pixelCoord[1], enemy, image)
-                #     self.check_enemy_intercept(pixelCoord[0], pixelCoord[1], self.green_enemy, image)
-            #####DRAW FINGER
 
 
 def main():
@@ -265,10 +241,6 @@ def main():
 
     # Main game loop
     while game.video.isOpened() and True:
-        # screen.fill((0, 0, 0))
-        # screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        # pygame.display.set_caption("Snake Game")
-
         image = pygame.image.load("data/Snake_Game_Grid.png")
         game.screen.blit(image, (0,0))
 
@@ -299,28 +271,9 @@ def main():
         # The image comes in mirrored - flip it
         image = cv2.flip(image, 1)
 
-
-
-        # Draw score onto screen
-        # cv2.putText(image, str(self.score), (50, 50), fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=1, color=GREEN, thickness=2)
-
         # Convert the image to a readable format and find the hands
         to_detect = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
         results = game.detector.detect(to_detect)
-
-        #Draw the enemy on the image
-        #self.green_enemy.draw(image)
-
-        #self.red_enemy.draw(image)
-
-        # if time.time() - self.starttime >= 2:
-        #     self.enemies.append(Enemy(GREEN))
-        #     self.enemies.append(Enemy(RED))
-            
-        #     self.starttime = time.time()
-
-        # for enemy in self.enemies:
-        #     enemy.draw(image)
 
         # Draw the hand landmarks
         game.draw_landmarks_on_hand(image, results)
@@ -329,15 +282,9 @@ def main():
         # Change the color of the frame back
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-        # cv2.namedWindow('Hand Tracking', cv2.WINDOW_NORMAL)
-        # cv2.resizeWindow('Hand Tracking', 2500, 1600)
-
-        #FOR VIDEO TO SHOW - AAAAAAAA
-        #cv2.imshow('Hand Tracking', image)
+        #FOR VIDEO TO SHOW
+        cv2.imshow('Hand Tracking', image)
         cv2.destroyAllWindows
-        # print(cv2.getWindowImageRect('Hand Tracking'))
 
 if __name__ == "__main__":
     main()
-
-
